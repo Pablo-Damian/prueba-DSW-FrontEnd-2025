@@ -109,10 +109,9 @@ body {
 }
 
 /*
-    Profesor:
-    Se ha implementado una estrategia de "mejora progresiva".
-    El efecto :hover solo se aplica a dispositivos con capacidad de puntero preciso (ratón).
-    Esto se logra con la media query '@media (hover: hover)'.
+    Se ha implementado una estrategia de "mejora progresiva":
+    El efecto :hover solo se aplica a dispositivos con capacidad de "puntero preciso" (ratón/mouse)
+    Esto se logra con la @media query '(hover: hover)'
 */
 @media (hover: hover) {
     .image-flipper:hover .flipper-content {
@@ -122,10 +121,9 @@ body {
 }
 
 /*
-    Profesor:
-    Para dispositivos táctiles, se crea una clase '.is-flipped' que será
-    gestionada por JavaScript. Esto permite controlar el giro de la tarjeta
-    mediante eventos de toque (tap).
+    Para dispositivos "táctiles", se crea una clase '.is-flipped'
+    que será gestionada por JavaScript
+    Esto permite controlar el giro de la tarjeta mediante eventos de toque (tap)
 */
 .is-flipped .flipper-content {
     transform: rotateY(180deg) translateZ(0);
