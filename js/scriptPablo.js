@@ -1,5 +1,5 @@
 /*
-    Funcionalidad: Theming (Modo Claro/Oscuro).
+    Funcionalidad: Theming (Modo Claro/Oscuro)
     - Objetivo: Cumplir con el requisito de una función dinámica implementada en JavaScript
     - Mecanismo: Utiliza 'localStorage' para garantizar la persistencia del tema
       seleccionado por el usuario a través de sesiones y navegación entre páginas
@@ -10,7 +10,7 @@
 */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- SECCIÓN 1: LÓGICA DEL MODO CLARO/OSCURO ---
+    // --- LÓGICA DEL MODO "CLARO/OSCURO" ---
     const themeToggleButton = document.getElementById('theme-toggle');
     if (themeToggleButton) {
         const themeToggleIcon = document.getElementById('theme-toggle-icon');
@@ -31,18 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- SECCIÓN 2: LÓGICA PARA INTERACCIÓN TÁCTIL DE LA TARJETA ---
+    // --- LÓGICA PARA LA INTERACCIÓN TÁCTIL DE LA TARJETA ---
     /*
-        Profesor:
-        Se añade esta lógica para mejorar la UX en dispositivos táctiles.
-        IMPORTANTE: Este bloque de código se ejecuta CONDICIONALMENTE.
+        Se añade esta lógica para mejorar la UX en dispositivos táctiles
+        Este bloque de código se ejecuta "CONDICIONALMENTE"
         Utilizando 'window.matchMedia', se detecta si el dispositivo principal
-        del usuario NO tiene capacidad de hover. De esta forma, el script
+        del usuario NO tiene capacidad de hover y de esta forma, el script
         solo se activa en pantallas táctiles, preservando la experiencia
-        nativa de :hover en dispositivos de escritorio.
+        nativa de :hover en computadoras portátiles y PC de escritorio
     */
     
-    // Si el dispositivo NO puede hacer hover (es táctil)...
+    // Si el dispositivo NO puede hacer hover (es "táctil")...
     if (!window.matchMedia('(hover: hover)').matches) {
         
         const flipper = document.querySelector('.image-flipper');
@@ -51,13 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isFlipped = flipper.classList.contains('is-flipped');
                 
                 if (!isFlipped) {
-                    // Previene la navegación en el primer toque para permitir el giro.
+                    // Se previene la navegación en el primer toque para permitir el giro
                     event.preventDefault();
                     flipper.classList.add('is-flipped');
                 }
             });
 
-            // Listener para girar la tarjeta si se toca fuera.
+            // Se utiliza listener para girar la tarjeta si se toca por afuera
             document.addEventListener('click', (event) => {
                 if (!flipper.contains(event.target)) {
                     flipper.classList.remove('is-flipped');
