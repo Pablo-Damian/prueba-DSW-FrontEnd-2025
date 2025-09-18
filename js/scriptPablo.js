@@ -10,34 +10,58 @@
 */
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- SECCIÓN 1: LÓGICA DEL MODO CLARO/OSCURO ---
     const themeToggleButton = document.getElementById('theme-toggle');
-    
-    // Se comprueba la existencia del botón para evitar errores en futuras
-    // páginas que quizás no lo incluyan
     if (themeToggleButton) {
         const themeToggleIcon = document.getElementById('theme-toggle-icon');
-        
-        // Al cargar la página, se lee la preferencia guardada en localStorage
         const currentTheme = localStorage.getItem('theme');
-        
-        // Si el tema guardado es 'dark', se aplica la clase y el "ícono" correspondiente
         if (currentTheme === 'dark') {
             document.body.classList.add('dark-mode');
             themeToggleIcon.src = 'img/pablo/modo-claro.png';
         }
-
-        // Se asigna el evento 'click' del botón
         themeToggleButton.addEventListener('click', () => {
-            // Alterna la clase 'dark-mode' en el body
             document.body.classList.toggle('dark-mode');
-
-            // Se actualiza el ícono y se guarda la nueva preferencia en localStorage
             if (document.body.classList.contains('dark-mode')) {
                 themeToggleIcon.src = 'img/pablo/modo-claro.png';
                 localStorage.setItem('theme', 'dark');
             } else {
                 themeToggleIcon.src = 'img/pablo/modo-oscuro.png';
                 localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+
+    // --- SECCIÓN 2: LÓGICA PARA INTERACCIÓN TÁCTIL DE LA TARJETA ---
+    /*
+        Profesor:
+        Se añade esta lógica para mejorar la UX en dispositivos táctiles, donde no
+        existe el evento ':hover'. Se gestiona el giro de la tarjeta manualmente.
+    */
+    const flipper = document.querySelector('.image-flipper');
+    if (flipper) {
+        flipper.addEventListener('click', (event) => {
+            // Comprueba si la tarjeta ya está girada.
+            const isFlipped = flipper.classList.contains('is-flipped');
+            
+            // Si no está girada, se ejecuta la lógica del primer toque.
+            if (!isFlipped) {
+                // 'event.preventDefault()' es crucial: cancela la acción por
+                // defecto del enlace (abrir la URL), permitiendo el giro.
+                event.preventDefault();
+                
+                // Añade la clase que dispara la animación de giro en CSS.
+                flipper.classList.add('is-flipped');
+            }
+            // Si la tarjeta ya estaba girada, no se hace nada aquí,
+            // permitiendo que el evento 'click' del enlace funcione normalmente.
+        });
+
+        // Event listener para volver a girar la tarjeta si se toca fuera de ella.
+        document.addEventListener('click', (event) => {
+            // Si el elemento clickeado NO es la tarjeta ni está dentro de ella...
+            if (!flipper.contains(event.target)) {
+                // ...se quita la clase para que vuelva a su estado original.
+                flipper.classList.remove('is-flipped');
             }
         });
     }
