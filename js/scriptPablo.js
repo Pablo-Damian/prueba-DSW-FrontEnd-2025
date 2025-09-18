@@ -34,35 +34,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- SECCIÓN 2: LÓGICA PARA INTERACCIÓN TÁCTIL DE LA TARJETA ---
     /*
         Profesor:
-        Se añade esta lógica para mejorar la UX en dispositivos táctiles, donde no
-        existe el evento ':hover'. Se gestiona el giro de la tarjeta manualmente.
+        Se añade esta lógica para mejorar la UX en dispositivos táctiles.
+        IMPORTANTE: Este bloque de código se ejecuta CONDICIONALMENTE.
+        Utilizando 'window.matchMedia', se detecta si el dispositivo principal
+        del usuario NO tiene capacidad de hover. De esta forma, el script
+        solo se activa en pantallas táctiles, preservando la experiencia
+        nativa de :hover en dispositivos de escritorio.
     */
-    const flipper = document.querySelector('.image-flipper');
-    if (flipper) {
-        flipper.addEventListener('click', (event) => {
-            // Comprueba si la tarjeta ya está girada.
-            const isFlipped = flipper.classList.contains('is-flipped');
-            
-            // Si no está girada, se ejecuta la lógica del primer toque.
-            if (!isFlipped) {
-                // 'event.preventDefault()' es crucial: cancela la acción por
-                // defecto del enlace (abrir la URL), permitiendo el giro.
-                event.preventDefault();
+    
+    // Si el dispositivo NO puede hacer hover (es táctil)...
+    if (!window.matchMedia('(hover: hover)').matches) {
+        
+        const flipper = document.querySelector('.image-flipper');
+        if (flipper) {
+            flipper.addEventListener('click', (event) => {
+                const isFlipped = flipper.classList.contains('is-flipped');
                 
-                // Añade la clase que dispara la animación de giro en CSS.
-                flipper.classList.add('is-flipped');
-            }
-            // Si la tarjeta ya estaba girada, no se hace nada aquí,
-            // permitiendo que el evento 'click' del enlace funcione normalmente.
-        });
+                if (!isFlipped) {
+                    // Previene la navegación en el primer toque para permitir el giro.
+                    event.preventDefault();
+                    flipper.classList.add('is-flipped');
+                }
+            });
 
-        // Event listener para volver a girar la tarjeta si se toca fuera de ella.
-        document.addEventListener('click', (event) => {
-            // Si el elemento clickeado NO es la tarjeta ni está dentro de ella...
-            if (!flipper.contains(event.target)) {
-                // ...se quita la clase para que vuelva a su estado original.
-                flipper.classList.remove('is-flipped');
-            }
-        });
+            // Listener para girar la tarjeta si se toca fuera.
+            document.addEventListener('click', (event) => {
+                if (!flipper.contains(event.target)) {
+                    flipper.classList.remove('is-flipped');
+                }
+            });
+        }
     }
 });
